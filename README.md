@@ -1,5 +1,4 @@
 # authentication-authorization
-The node.js project that allow to register and log in users.
 My simple application that allow to register, verify email and log in users.
 I used express, mongoDB and some node libraries to do that.
 To use my app you have to set some env variables(to see which env variables are necessary please look at config folder)
