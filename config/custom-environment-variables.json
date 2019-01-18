@@ -1,0 +1,5 @@
+{
+    "jwtPrivateKey": "auth_jwtPrivateKey",
+    "gmailUsername": "auth_gmailUsername",
+    "gmailPassword": "auth_gmailPassword"
+}
