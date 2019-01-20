@@ -2,10 +2,11 @@ const express = require('express');
 const {User} = require('../models/user')
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const config = require('config')
+const config = require('config');
+const asyncHandler = require('../middleware/asyncHandler');
 
 
-router.get('/:token', async (req, res)=>{
+router.get('/:token', asyncHandler(async (req, res)=>{
     const token = req.params.token;
     
     try {
@@ -18,6 +19,6 @@ router.get('/:token', async (req, res)=>{
     }
 
 
-});
+}));
 
 module.exports = router;

@@ -2,8 +2,9 @@ const express = require('express');
 const {User} = require('../models/user')
 const jwtAuth = require('../middleware/authorization');
 const router = express.Router();
+const asyncHandler = require('../middleware/asyncHandler');
 
-router.get('/', jwtAuth, async (req, res)=>{
+router.get('/', jwtAuth, asyncHandler(async (req, res)=>{
     
     const user = await User.findById(req.user._id)
 
@@ -13,6 +14,6 @@ router.get('/', jwtAuth, async (req, res)=>{
         isAdmin: user.isAdmin
     }
     res.send(userInfo);
-});
+}));
 
 module.exports = router;

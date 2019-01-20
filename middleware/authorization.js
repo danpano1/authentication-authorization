@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
+
 module.exports = authorization = (req, res, next)=>{
     const token = req.header('X-Auth-Token');
     if (!token) return res.status(401).send('You have no access here.');

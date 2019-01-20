@@ -3,8 +3,9 @@ const {User} = require('../models/user');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const asyncHandler = require('../middleware/asyncHandler');
 
-router.post('/', async (req, res)=>{
+router.post('/', asyncHandler (async (req, res)=>{
     const { error } = validation(req);
 
     if(error) return res.status(400).send(error.details[0].message);
@@ -18,7 +19,7 @@ router.post('/', async (req, res)=>{
     if(!user.isEmailVerified) return res.status(401).send('Please verify your email first');
 
     res.send(user.generateJWT());
-    });
+    }));
 
 validation = (req) =>{
     

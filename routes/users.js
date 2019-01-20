@@ -4,9 +4,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const mailVerification = require('../emails/verifyMail');
 const jwt = require('jsonwebtoken');
+const asyncHandler = require('../middleware/asyncHandler');
+const config = require('config');
 
 
-router.post('/', async (req, res)=>{
+router.post('/', asyncHandler(async (req, res)=>{
 
     const {error} = validation(req.body);
 
@@ -26,9 +28,9 @@ router.post('/', async (req, res)=>{
     userRegistering.password = hashedPassword;
     
 
-    const token = jwt.sign({_id:userRegistering._id}, 'privateKey')
+    const token = jwt.sign({_id:userRegistering._id}, config.get('jwtPrivateKey'))
     
-    try {
+   
        await mailVerification(userRegistering, `http://localhost:8080/api/verification/${token}`);
        await userRegistering.save();
        res.send({
@@ -36,11 +38,6 @@ router.post('/', async (req, res)=>{
            name: userRegistering.name,
            email: userRegistering.email
        });
-    }
-    catch(err){
-        res.status(500).send(err.errmsg);
-    }
-
-})
+    }));
 
 module.exports = router;

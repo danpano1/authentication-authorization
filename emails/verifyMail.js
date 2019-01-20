@@ -1,7 +1,8 @@
 const nodemailer = require('nodemailer');
 const config = require('config');
+const logger = require('../logger');
 
-async function createTransporter(user, urlWithVerificationToken){
+module.exports = async function createTransporter(user, urlWithVerificationToken){
      const transporter = await nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -13,12 +14,12 @@ async function createTransporter(user, urlWithVerificationToken){
     from: config.get('gmailUsername'),
     to: user.email, 
     subject: "E-mail verification",
-    html: `Hello ${user.name}, to verificate your account please enter: ${urlWithVerificationToken}`
+    html: `Hello ${user.name}, to verificate your account please enter: <a href="${urlWithVerificationToken}">here</a>`
   };
   const info = await transporter.sendMail(mailOptions)
-  console.log(info);
+  logger.info(info.response);
 
 }
 
 
- module.exports = createTransporter;
+ 
